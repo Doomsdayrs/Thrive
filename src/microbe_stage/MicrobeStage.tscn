@@ -366,8 +366,8 @@ __meta__ = {
 }
 AnimationPlayerPath = NodePath("AnimationPlayer")
 LeftPanelsPath = NodePath("LeftPanels")
-MouseHoverPanelPath = NodePath("MouseHoverPanel")
-HoveredItemsContainerPath = NodePath("MouseHoverPanel/MarginContainer/VBoxContainer/HoveredItems")
+MouseHoverPanelPath = NodePath("Right Panels/MouseHoverPanel")
+HoveredItemsContainerPath = NodePath("Right Panels/MouseHoverPanel/MarginContainer/VBoxContainer/HoveredItems")
 MenuPath = NodePath("CanvasLayer/PauseMenu")
 PauseButtonPath = NodePath("BottomBar/PauseButtonMargin/Pause")
 ResumeButtonPath = NodePath("BottomBar/PauseButtonMargin/Resume")
@@ -407,53 +407,145 @@ PhosphatesBW = ExtResource( 5 )
 AmmoniaInv = ExtResource( 3 )
 PhosphatesInv = ExtResource( 4 )
 
-[node name="MouseHoverPanel" type="PanelContainer" parent="MicrobeHUD"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -280.0
+[node name="Right Panels" type="VBoxContainer" parent="MicrobeHUD"]
+margin_left = 1020.0
 margin_top = 10.0
-margin_right = -10.0
-margin_bottom = 140.0
+margin_right = 1270.0
+margin_bottom = 310.0
 grow_horizontal = 0
+grow_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="MouseHoverPanel" type="PanelContainer" parent="MicrobeHUD/Right Panels"]
+margin_right = 250.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 250, 100 )
 theme = SubResource( 2 )
 custom_styles/panel = SubResource( 3 )
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_group_": true,
+"_edit_use_anchors_": false,
+"_editor_description_": "Tells the user what is at the cursors location"
 }
 
-[node name="MarginContainer" type="MarginContainer" parent="MicrobeHUD/MouseHoverPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="MicrobeHUD/Right Panels/MouseHoverPanel"]
 margin_left = 1.0
 margin_top = 1.0
-margin_right = 269.0
-margin_bottom = 129.0
+margin_right = 249.0
+margin_bottom = 99.0
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
 custom_constants/margin_left = 10
 custom_constants/margin_bottom = 10
+__meta__ = {
+"_edit_group_": true
+}
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MicrobeHUD/MouseHoverPanel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MicrobeHUD/Right Panels/MouseHoverPanel/MarginContainer"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 258.0
-margin_bottom = 118.0
+margin_right = 238.0
+margin_bottom = 88.0
 
-[node name="MousePos" type="Label" parent="MicrobeHUD/MouseHoverPanel/MarginContainer/VBoxContainer"]
-margin_right = 248.0
+[node name="MousePos" type="Label" parent="MicrobeHUD/Right Panels/MouseHoverPanel/MarginContainer/VBoxContainer"]
+margin_right = 228.0
 margin_bottom = 17.0
 text = "Stuff at"
 align = 1
 
-[node name="HSeparator" type="HSeparator" parent="MicrobeHUD/MouseHoverPanel/MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="MicrobeHUD/Right Panels/MouseHoverPanel/MarginContainer/VBoxContainer"]
 margin_top = 21.0
-margin_right = 248.0
+margin_right = 228.0
 margin_bottom = 26.0
 rect_min_size = Vector2( 0, 5 )
 custom_styles/separator = SubResource( 4 )
 
-[node name="HoveredItems" type="VBoxContainer" parent="MicrobeHUD/MouseHoverPanel/MarginContainer/VBoxContainer"]
+[node name="HoveredItems" type="VBoxContainer" parent="MicrobeHUD/Right Panels/MouseHoverPanel/MarginContainer/VBoxContainer"]
 margin_top = 30.0
-margin_right = 248.0
+margin_right = 228.0
 margin_bottom = 30.0
+
+[node name="NotificationPanel" type="PanelContainer" parent="MicrobeHUD/Right Panels"]
+margin_top = 104.0
+margin_right = 250.0
+margin_bottom = 164.0
+grow_horizontal = 0
+rect_min_size = Vector2( 200, 50 )
+theme = SubResource( 2 )
+custom_styles/panel = SubResource( 3 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false,
+"_editor_description_": "Notifications to tell the user what is happening"
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="MicrobeHUD/Right Panels/NotificationPanel"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 249.0
+margin_bottom = 59.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MicrobeHUD/Right Panels/NotificationPanel/MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 238.0
+margin_bottom = 48.0
+
+[node name="MarginContainer" type="MarginContainer" parent="MicrobeHUD/Right Panels/NotificationPanel/MarginContainer/VBoxContainer"]
+margin_right = 228.0
+margin_bottom = 25.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MicrobeHUD/Right Panels/NotificationPanel/MarginContainer/VBoxContainer/MarginContainer"]
+margin_right = 228.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 120, 25 )
+
+[node name="NotificationPanelTitle" type="Label" parent="MicrobeHUD/Right Panels/NotificationPanel/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+margin_top = 4.0
+margin_right = 91.0
+margin_bottom = 21.0
+rect_min_size = Vector2( 91, 17 )
+text = "Notifications"
+align = 1
+
+[node name="CheckBox" type="CheckBox" parent="MicrobeHUD/Right Panels/NotificationPanel/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+margin_left = 95.0
+margin_right = 119.0
+margin_bottom = 25.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSeparator" type="HSeparator" parent="MicrobeHUD/Right Panels/NotificationPanel/MarginContainer/VBoxContainer"]
+margin_top = 29.0
+margin_right = 228.0
+margin_bottom = 34.0
+rect_min_size = Vector2( 0, 5 )
+custom_styles/separator = SubResource( 4 )
+
+[node name="NotificationScrollBox" type="ScrollContainer" parent="MicrobeHUD/Right Panels/NotificationPanel/MarginContainer/VBoxContainer"]
+margin_top = 38.0
+margin_right = 228.0
+margin_bottom = 38.0
+scroll_horizontal_enabled = false
+__meta__ = {
+"_editor_description_": "This box controlls scrolling for the notifications"
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MicrobeHUD/Right Panels/NotificationPanel/MarginContainer/VBoxContainer/NotificationScrollBox"]
+__meta__ = {
+"_editor_description_": "This box contains the notifications"
+}
 
 [node name="LeftPanels" type="VBoxContainer" parent="MicrobeHUD"]
 anchor_top = 1.0
@@ -468,6 +560,7 @@ size_flags_vertical = 0
 custom_constants/separation = 10
 alignment = 2
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -1417,6 +1510,7 @@ margin_right = 375.0
 margin_bottom = -7.99994
 rect_min_size = Vector2( 0, 35 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -1557,6 +1651,7 @@ anchor_bottom = 1.0
 margin_left = -340.0
 margin_top = -340.0
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 

@@ -53,10 +53,10 @@ __meta__ = {
 }
 
 [node name="MenuCenterContainer" type="CenterContainer" parent="MenuContainers"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
+anchor_left = 0.507812
+anchor_top = 0.531944
+anchor_right = 0.507812
+anchor_bottom = 0.531944
 margin_left = -637.0
 margin_top = -145.0
 margin_right = 643.0
@@ -257,4 +257,3 @@ __meta__ = {
 [connection signal="pressed" from="MenuContainers/MenuCenterContainer/MenuItems/MainMenu/Quit" to="." method="QuitPressed"]
 [connection signal="pressed" from="MenuContainers/MenuCenterContainer/MenuItems/Tools/Freebuild Editor" to="." method="FreebuildEditorPressed"]
 [connection signal="pressed" from="MenuContainers/MenuCenterContainer/MenuItems/Tools/Back" to="." method="BackFromToolsPressed"]
-[connection signal="OnOptionsClosed" from="OptionsMenu" to="." method="OnReturnFromOptions"]

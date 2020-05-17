@@ -266,6 +266,7 @@ public class MicrobeHUD : Node
             UpdateReproductionProgress();
             UpdateATP();
             UpdateHealth();
+            UpdateNotificationBox();
         }
 
         if (stage.Camera != null)
@@ -755,6 +756,18 @@ public class MicrobeHUD : Node
     private void UpdatePopulation()
     {
         populationLabel.Text = stage.GameWorld.PlayerSpecies.Population.ToString(CultureInfo.InvariantCulture);
+    }
+
+    /// <summary>
+    /// Updates the notification box.
+    /// </summary>
+    private void UpdateNotificationBox()
+    {
+        // TODO Implement notification
+
+        // Retrieve Data from the source
+
+        // Set Data into view
     }
 
     /// <summary>
