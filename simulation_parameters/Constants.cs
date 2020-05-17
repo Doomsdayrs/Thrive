@@ -25,6 +25,7 @@ public static class Constants
     ///   Don't change this, so much stuff will break
     /// </summary>
     public const int CLOUDS_IN_ONE = 4;
+
     public const int CLOUD_SQUARES_PER_SIDE = 3;
     public const int CLOUD_EDGE_WIDTH = 2;
 
@@ -108,6 +109,7 @@ public static class Constants
     ///   released upon death (between 0.0 and 1.0).
     /// </summary>
     public const float COMPOUND_MAKEUP_RELEASE_PERCENTAGE = 0.9f;
+
     public const float COMPOUND_RELEASE_PERCENTAGE = 0.9f;
 
     /// <summary>
@@ -257,6 +259,7 @@ public static class Constants
     ///   and multiplying it by this. This must be negative!
     /// </summary>
     public const float CELL_DRAG_MULTIPLIER = -0.12f;
+
     public const float CELL_SIZE_DRAG_MULTIPLIER = -0.003f;
 
     /// <summary>
@@ -268,6 +271,7 @@ public static class Constants
     ///   This should be the max needed hexes (nucleus {10} * 6-way symmetry)
     /// </summary>
     public const int MAX_HOVER_HEXES = 60;
+
     public const int MAX_SYMMETRY = 6;
 
     // Cell Colors
@@ -393,8 +397,9 @@ public static class Constants
         {
             var assembly = Assembly.GetExecutingAssembly();
             Version version = assembly.GetName().Version;
-            var versionSuffix = (AssemblyInformationalVersionAttribute[])assembly.
-                GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), false);
+            var versionSuffix =
+                (AssemblyInformationalVersionAttribute[])assembly.GetCustomAttributes(
+                    typeof(AssemblyInformationalVersionAttribute), false);
             return $"{version}" + versionSuffix[0].InformationalVersion;
         }
     }

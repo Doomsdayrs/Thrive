@@ -7,186 +7,174 @@ using Godot;
 /// </summary>
 public class PatchMapDrawer : Control
 {
-	[Export]
-	public bool DrawDefaultMapIfEmpty = false;
+    [Export]
+    public bool DrawDefaultMapIfEmpty = false;
 
-	[Export]
-	public float ConnectionLineWidth = 2.0f;
+    [Export]
+    public float ConnectionLineWidth = 2.0f;
 
-	[Export]
-	public float PatchNodeWidth = 64.0f;
+    [Export]
+    public float PatchNodeWidth = 64.0f;
 
-	[Export]
-	public float PatchNodeHeight = 64.0f;
+    [Export]
+    public float PatchNodeHeight = 64.0f;
 
-	[Export]
-	public Color ConnectionColour = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+    [Export]
+    public Color ConnectionColour = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 
-	private PatchMap map;
-	private bool dirty = true;
+    private PatchMap map;
+    private bool dirty = true;
 
-	private PackedScene nodeScene;
+    private PackedScene nodeScene;
 
-	private List<PatchMapNode> nodes = new List<PatchMapNode>();
+    private List<PatchMapNode> nodes = new List<PatchMapNode>();
 
-	private Patch selectedPatch;
+    private Patch selectedPatch;
 
-	private Patch playerPatch;
+    private Patch playerPatch;
 
-	public PatchMap Map
-	{
-		get
-		{
-			return map;
-		}
-		set
-		{
-			map = value;
-			dirty = true;
+    public PatchMap Map
+    {
+        get { return map; }
+        set
+        {
+            map = value;
+            dirty = true;
 
-			if (playerPatch == null)
-				playerPatch = Map.CurrentPatch;
-		}
-	}
+            if (playerPatch == null)
+                playerPatch = Map.CurrentPatch;
+        }
+    }
 
-	public Patch PlayerPatch
-	{
-		get
-		{
-			return playerPatch;
-		}
-		set
-		{
-			if (playerPatch == value)
-				return;
+    public Patch PlayerPatch
+    {
+        get { return playerPatch; }
+        set
+        {
+            if (playerPatch == value)
+                return;
 
-			playerPatch = value;
-			UpdateNodeSelections();
-			NotifySelectionChanged();
-		}
-	}
+            playerPatch = value;
+            UpdateNodeSelections();
+            NotifySelectionChanged();
+        }
+    }
 
-	public Patch SelectedPatch
-	{
-		get
-		{
-			return selectedPatch;
-		}
-		set
-		{
-			if (selectedPatch == value)
-				return;
+    public Patch SelectedPatch
+    {
+        get { return selectedPatch; }
+        set
+        {
+            if (selectedPatch == value)
+                return;
 
-			selectedPatch = value;
-			UpdateNodeSelections();
-			NotifySelectionChanged();
-		}
-	}
+            selectedPatch = value;
+            UpdateNodeSelections();
+            NotifySelectionChanged();
+        }
+    }
 
-	/// <summary>
-	///   Called when the currently shown patch properties should be looked up again
-	/// </summary>
-	public Action<PatchMapDrawer> OnSelectedPatchChanged { get; set; }
+    /// <summary>
+    ///   Called when the currently shown patch properties should be looked up again
+    /// </summary>
+    public Action<PatchMapDrawer> OnSelectedPatchChanged { get; set; }
 
-	public override void _Ready()
-	{
-		nodeScene = GD.Load<PackedScene>("res://src/microbe_stage/editor/PatchMapNode.tscn");
+    public override void _Ready()
+    {
+        nodeScene = GD.Load<PackedScene>("res://src/microbe_stage/editor/PatchMapNode.tscn");
 
-		if (DrawDefaultMapIfEmpty && Map == null)
-		{
-			GD.Print("Generating and showing a new patch map for testing in PatchMapDrawer");
-			Map = new GameWorld(new WorldGenerationSettings()).Map;
-		}
-	}
+        if (DrawDefaultMapIfEmpty && Map == null)
+        {
+            GD.Print("Generating and showing a new patch map for testing in PatchMapDrawer");
+            Map = new GameWorld(new WorldGenerationSettings()).Map;
+        }
+    }
 
-	public override void _Process(float delta)
-	{
-		if (dirty)
-		{
-			RebuildMapNodes();
-			Update();
-			dirty = false;
-		}
-	}
+    public override void _Process(float delta)
+    {
+        if (dirty)
+        {
+            RebuildMapNodes();
+            Update();
+            dirty = false;
+        }
+    }
 
-	/// <summary>
-	///   Custom drawing, draws the lines between map nodes
-	/// </summary>
-	public override void _Draw()
-	{
-		if (Map == null)
-			return;
+    /// <summary>
+    ///   Custom drawing, draws the lines between map nodes
+    /// </summary>
+    public override void _Draw()
+    {
+        if (Map == null)
+            return;
 
-		// This ends up drawing duplicates but that doesn't seem problematic ATM
-		foreach (var entry in Map.Patches)
-		{
-			foreach (var adjacent in entry.Value.Adjacent)
-			{
-				var start = Center(entry.Value.ScreenCoordinates);
-				var end = Center(adjacent.ScreenCoordinates);
+        // This ends up drawing duplicates but that doesn't seem problematic ATM
+        foreach (var entry in Map.Patches)
+        {
+            foreach (var adjacent in entry.Value.Adjacent)
+            {
+                var start = Center(entry.Value.ScreenCoordinates);
+                var end = Center(adjacent.ScreenCoordinates);
 
-				DrawNodeLink(start, end);
-			}
-		}
-	}
+                DrawNodeLink(start, end);
+            }
+        }
+    }
 
-	private Vector2 Center(Vector2 pos)
-	{
-		return new Vector2(pos.x + PatchNodeWidth / 2, pos.y + PatchNodeHeight / 2);
-	}
+    private Vector2 Center(Vector2 pos)
+    {
+        return new Vector2(pos.x + PatchNodeWidth / 2, pos.y + PatchNodeHeight / 2);
+    }
 
-	private void DrawNodeLink(Vector2 center1, Vector2 center2)
-	{
-		DrawLine(center1, center2, ConnectionColour, ConnectionLineWidth, true);
-	}
+    private void DrawNodeLink(Vector2 center1, Vector2 center2)
+    {
+        DrawLine(center1, center2, ConnectionColour, ConnectionLineWidth, true);
+    }
 
-	private void RebuildMapNodes()
-	{
-		foreach (var node in nodes)
-		{
-			node.Free();
-		}
+    private void RebuildMapNodes()
+    {
+        foreach (var node in nodes)
+        {
+            node.Free();
+        }
 
-		nodes.Clear();
+        nodes.Clear();
 
-		if (Map == null)
-			return;
+        if (Map == null)
+            return;
 
-		foreach (var entry in Map.Patches)
-		{
-			var node = (PatchMapNode)nodeScene.Instance();
-			node.MarginLeft = entry.Value.ScreenCoordinates.x;
-			node.MarginTop = entry.Value.ScreenCoordinates.y;
-			node.RectSize = new Vector2(PatchNodeWidth, PatchNodeHeight);
+        foreach (var entry in Map.Patches)
+        {
+            var node = (PatchMapNode)nodeScene.Instance();
+            node.MarginLeft = entry.Value.ScreenCoordinates.x;
+            node.MarginTop = entry.Value.ScreenCoordinates.y;
+            node.RectSize = new Vector2(PatchNodeWidth, PatchNodeHeight);
 
-			node.Patch = entry.Value;
-			node.PatchIcon = entry.Value.Biome.LoadedIcon;
+            node.Patch = entry.Value;
+            node.PatchIcon = entry.Value.Biome.LoadedIcon;
 
-			node.SelectCallback = (clicked) =>
-			{
-				SelectedPatch = clicked.Patch;
-			};
+            node.SelectCallback = (clicked) => { SelectedPatch = clicked.Patch; };
 
-			AddChild(node);
-			nodes.Add(node);
-		}
+            AddChild(node);
+            nodes.Add(node);
+        }
 
-		UpdateNodeSelections();
-		NotifySelectionChanged();
-	}
+        UpdateNodeSelections();
+        NotifySelectionChanged();
+    }
 
-	private void UpdateNodeSelections()
-	{
-		foreach (var node in nodes)
-		{
-			node.Selected = node.Patch == selectedPatch;
-			node.Marked = node.Patch == playerPatch;
-		}
-	}
+    private void UpdateNodeSelections()
+    {
+        foreach (var node in nodes)
+        {
+            node.Selected = node.Patch == selectedPatch;
+            node.Marked = node.Patch == playerPatch;
+        }
+    }
 
-	private void NotifySelectionChanged()
-	{
-		if (OnSelectedPatchChanged != null)
-			OnSelectedPatchChanged(this);
-	}
+    private void NotifySelectionChanged()
+    {
+        if (OnSelectedPatchChanged != null)
+            OnSelectedPatchChanged(this);
+    }
 }

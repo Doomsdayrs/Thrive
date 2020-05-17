@@ -28,7 +28,7 @@ public class MembraneType : IRegistryType
 
         var directory = new Directory();
 
-        string[] membranes = { NormalTexture, DamagedTexture };
+        string[] membranes = {NormalTexture, DamagedTexture};
 
         foreach (var resource in membranes)
         {

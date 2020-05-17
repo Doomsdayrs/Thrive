@@ -70,8 +70,10 @@ public static class SpawnHelpers
         if (random.Next(0, 5) < 2)
         {
             // Clump
-            for (int i = 0; i < random.Next(Constants.MIN_BACTERIAL_COLONY_SIZE,
-                Constants.MAX_BACTERIAL_COLONY_SIZE + 1); i++)
+            for (int i = 0;
+                i < random.Next(Constants.MIN_BACTERIAL_COLONY_SIZE,
+                    Constants.MAX_BACTERIAL_COLONY_SIZE + 1);
+                i++)
             {
                 // Dont spawn them on top of each other because it
                 // causes them to bounce around and lag
@@ -88,8 +90,10 @@ public static class SpawnHelpers
             // (I combined the lineX and lineZ here because they have the same values)
             var line = random.Next(-5, 6) + random.Next(-5, 6);
 
-            for (int i = 0; i < random.Next(Constants.MIN_BACTERIAL_LINE_SIZE,
-                Constants.MAX_BACTERIAL_LINE_SIZE + 1); i++)
+            for (int i = 0;
+                i < random.Next(Constants.MIN_BACTERIAL_LINE_SIZE,
+                    Constants.MAX_BACTERIAL_LINE_SIZE + 1);
+                i++)
             {
                 // Dont spawn them on top of each other because it
                 // Causes them to bounce around and lag
@@ -109,16 +113,20 @@ public static class SpawnHelpers
             var horizontal = false;
             var vertical = false;
 
-            for (int i = 0; i < random.Next(Constants.MIN_BACTERIAL_COLONY_SIZE,
-                Constants.MAX_BACTERIAL_COLONY_SIZE + 1); i++)
+            for (int i = 0;
+                i < random.Next(Constants.MIN_BACTERIAL_COLONY_SIZE,
+                    Constants.MAX_BACTERIAL_COLONY_SIZE + 1);
+                i++)
             {
                 if (random.Next(0, 5) < 2 && !horizontal)
                 {
                     horizontal = true;
                     vertical = false;
 
-                    for (int c = 0; c < random.Next(Constants.MIN_BACTERIAL_LINE_SIZE,
-                        Constants.MAX_BACTERIAL_LINE_SIZE + 1); c++)
+                    for (int c = 0;
+                        c < random.Next(Constants.MIN_BACTERIAL_LINE_SIZE,
+                            Constants.MAX_BACTERIAL_LINE_SIZE + 1);
+                        c++)
                     {
                         // Dont spawn them on top of each other because
                         // It causes them to bounce around and lag
@@ -136,8 +144,10 @@ public static class SpawnHelpers
                     horizontal = false;
                     vertical = true;
 
-                    for (int c = 0; c < random.Next(Constants.MIN_BACTERIAL_LINE_SIZE,
-                        Constants.MAX_BACTERIAL_LINE_SIZE + 1); c++)
+                    for (int c = 0;
+                        c < random.Next(Constants.MIN_BACTERIAL_LINE_SIZE,
+                            Constants.MAX_BACTERIAL_LINE_SIZE + 1);
+                        c++)
                     {
                         // Dont spawn them on top of each other because it
                         // Causes them to bounce around and lag
@@ -155,8 +165,10 @@ public static class SpawnHelpers
                     horizontal = true;
                     vertical = false;
 
-                    for (int c = 0; c < random.Next(Constants.MIN_BACTERIAL_LINE_SIZE,
-                        Constants.MAX_BACTERIAL_LINE_SIZE + 1); c++)
+                    for (int c = 0;
+                        c < random.Next(Constants.MIN_BACTERIAL_LINE_SIZE,
+                            Constants.MAX_BACTERIAL_LINE_SIZE + 1);
+                        c++)
                     {
                         // Dont spawn them on top of each other because
                         // It causes them to bounce around and lag
@@ -174,8 +186,10 @@ public static class SpawnHelpers
                     horizontal = false;
                     vertical = true;
 
-                    for (int c = 0; c < random.Next(Constants.MIN_BACTERIAL_LINE_SIZE,
-                        Constants.MAX_BACTERIAL_LINE_SIZE + 1); c++)
+                    for (int c = 0;
+                        c < random.Next(Constants.MIN_BACTERIAL_LINE_SIZE,
+                            Constants.MAX_BACTERIAL_LINE_SIZE + 1);
+                        c++)
                     {
                         // Dont spawn them on top of each other because it
                         // causes them to bounce around and lag
@@ -194,8 +208,10 @@ public static class SpawnHelpers
                     horizontal = false;
                     vertical = false;
 
-                    for (int c = 0; c < random.Next(Constants.MIN_BACTERIAL_LINE_SIZE,
-                        Constants.MAX_BACTERIAL_LINE_SIZE + 1); c++)
+                    for (int c = 0;
+                        c < random.Next(Constants.MIN_BACTERIAL_LINE_SIZE,
+                            Constants.MAX_BACTERIAL_LINE_SIZE + 1);
+                        c++)
                     {
                         // Dont spawn them on top of each other because it
                         // Causes them to bounce around and lag

@@ -68,28 +68,28 @@ public class FluidSystem
         var scaledPosition = position * PositionScaling;
 
         float disturbances_x =
-             ((float)noiseDisturbancesX.Noise(scaledPosition.x, scaledPosition.y,
-                 millisecondsPassed * DisturbanceTimescale) *
-                 2.0f) -
-             1.0f;
+            ((float)noiseDisturbancesX.Noise(scaledPosition.x, scaledPosition.y,
+                    millisecondsPassed * DisturbanceTimescale) *
+                2.0f) -
+            1.0f;
 
         float disturbances_y =
-             ((float)noiseDisturbancesY.Noise(scaledPosition.x, scaledPosition.y,
-                 millisecondsPassed * DisturbanceTimescale) *
-                 2.0f) -
-             1.0f;
+            ((float)noiseDisturbancesY.Noise(scaledPosition.x, scaledPosition.y,
+                    millisecondsPassed * DisturbanceTimescale) *
+                2.0f) -
+            1.0f;
 
         float currents_x =
-             ((float)noiseCurrentsX.Noise(scaledPosition.x * CurrentsStretchingMultiplier,
-                 scaledPosition.y, millisecondsPassed * CurrentsTimescale) *
-                 2.0f) -
-             1.0f;
+            ((float)noiseCurrentsX.Noise(scaledPosition.x * CurrentsStretchingMultiplier,
+                    scaledPosition.y, millisecondsPassed * CurrentsTimescale) *
+                2.0f) -
+            1.0f;
         float currents_y =
-             ((float)noiseCurrentsY.Noise(scaledPosition.x,
-                 scaledPosition.y * CurrentsStretchingMultiplier,
-                 millisecondsPassed * CurrentsTimescale) *
-                 2.0f) -
-             1.0f;
+            ((float)noiseCurrentsY.Noise(scaledPosition.x,
+                    scaledPosition.y * CurrentsStretchingMultiplier,
+                    millisecondsPassed * CurrentsTimescale) *
+                2.0f) -
+            1.0f;
 
         var disturbancesVelocity = new Vector2(disturbances_x, disturbances_y);
         var currentsVelocity = new Vector2(
@@ -97,6 +97,6 @@ public class FluidSystem
             Math.Abs(currents_y) > MinCurrentIntensity ? currents_y : 0.0f);
 
         return (disturbancesVelocity * DisturbanceToCurrentsRatio) +
-                (currentsVelocity * (1.0f - DisturbanceToCurrentsRatio));
+            (currentsVelocity * (1.0f - DisturbanceToCurrentsRatio));
     }
 }

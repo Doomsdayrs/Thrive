@@ -9,6 +9,7 @@ public class GameProperties
 {
     private readonly Dictionary<string, bool> lockedOrganelles =
         new Dictionary<string, bool>();
+
     private bool freeBuild = false;
 
     private GameProperties()
@@ -27,10 +28,7 @@ public class GameProperties
     /// </summary>
     public bool FreeBuild
     {
-        get
-        {
-            return freeBuild;
-        }
+        get { return freeBuild; }
     }
 
     /// <summary>

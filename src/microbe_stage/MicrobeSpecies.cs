@@ -21,10 +21,7 @@ public class MicrobeSpecies : Species
     [JsonIgnore]
     public override string StringCode
     {
-        get
-        {
-            return ToString();
-        }
+        get { return ToString(); }
         set
         {
             // TODO: allow replacing Organelles from value

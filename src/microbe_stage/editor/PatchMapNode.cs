@@ -6,147 +6,137 @@ using Godot;
 /// </summary>
 public class PatchMapNode : MarginContainer
 {
-	[Export]
-	public NodePath IconPath;
-	[Export]
-	public NodePath HighlightPanelPath;
-	[Export]
-	public NodePath MarkPanelPath;
+    [Export]
+    public NodePath IconPath;
 
-	private TextureRect iconRect;
-	private Panel highlightPanel;
-	private Panel markPanel;
+    [Export]
+    public NodePath HighlightPanelPath;
 
-	private bool highlighted = false;
-	private bool selected = false;
-	private bool marked = false;
+    [Export]
+    public NodePath MarkPanelPath;
 
-	private Texture patchIcon;
+    private TextureRect iconRect;
+    private Panel highlightPanel;
+    private Panel markPanel;
 
-	/// <summary>
-	///   This object does nothing with this, this is stored here to make other code simpler
-	/// </summary>
-	public Patch Patch { get; set; }
+    private bool highlighted = false;
+    private bool selected = false;
+    private bool marked = false;
 
-	public Action<PatchMapNode> SelectCallback { get; set; }
+    private Texture patchIcon;
 
-	public Texture PatchIcon
-	{
-		get
-		{
-			return patchIcon;
-		}
-		set
-		{
-			if (patchIcon == value)
-				return;
+    /// <summary>
+    ///   This object does nothing with this, this is stored here to make other code simpler
+    /// </summary>
+    public Patch Patch { get; set; }
 
-			patchIcon = value;
-			UpdateIcon();
-		}
-	}
+    public Action<PatchMapNode> SelectCallback { get; set; }
 
-	public bool Highlighted
-	{
-		get
-		{
-			return highlighted;
-		}
-		set
-		{
-			highlighted = value;
-			UpdateSelectHighlightRing();
-		}
-	}
+    public Texture PatchIcon
+    {
+        get { return patchIcon; }
+        set
+        {
+            if (patchIcon == value)
+                return;
 
-	public bool Selected
-	{
-		get
-		{
-			return selected;
-		}
-		set
-		{
-			selected = value;
-			UpdateSelectHighlightRing();
-		}
-	}
+            patchIcon = value;
+            UpdateIcon();
+        }
+    }
 
-	public bool Marked
-	{
-		get
-		{
-			return marked;
-		}
-		set
-		{
-			marked = value;
-			UpdateMarkRing();
-		}
-	}
+    public bool Highlighted
+    {
+        get { return highlighted; }
+        set
+        {
+            highlighted = value;
+            UpdateSelectHighlightRing();
+        }
+    }
 
-	public override void _Ready()
-	{
-		iconRect = GetNode<TextureRect>(IconPath);
-		highlightPanel = GetNode<Panel>(HighlightPanelPath);
-		markPanel = GetNode<Panel>(MarkPanelPath);
+    public bool Selected
+    {
+        get { return selected; }
+        set
+        {
+            selected = value;
+            UpdateSelectHighlightRing();
+        }
+    }
 
-		UpdateSelectHighlightRing();
-		UpdateMarkRing();
-		UpdateIcon();
-	}
+    public bool Marked
+    {
+        get { return marked; }
+        set
+        {
+            marked = value;
+            UpdateMarkRing();
+        }
+    }
 
-	public override void _GuiInput(InputEvent @event)
-	{
-		if (@event is InputEventMouseButton mouse)
-		{
-			if (mouse.Pressed)
-			{
-				OnSelect();
-				AcceptEvent();
-			}
-		}
-	}
+    public override void _Ready()
+    {
+        iconRect = GetNode<TextureRect>(IconPath);
+        highlightPanel = GetNode<Panel>(HighlightPanelPath);
+        markPanel = GetNode<Panel>(MarkPanelPath);
 
-	public void OnSelect()
-	{
-		Selected = true;
+        UpdateSelectHighlightRing();
+        UpdateMarkRing();
+        UpdateIcon();
+    }
 
-		if (SelectCallback != null)
-			SelectCallback(this);
-	}
+    public override void _GuiInput(InputEvent @event)
+    {
+        if (@event is InputEventMouseButton mouse)
+        {
+            if (mouse.Pressed)
+            {
+                OnSelect();
+                AcceptEvent();
+            }
+        }
+    }
 
-	public void OnMouseEnter()
-	{
-		Highlighted = true;
-	}
+    public void OnSelect()
+    {
+        Selected = true;
 
-	public void OnMouseExit()
-	{
-		Highlighted = false;
-	}
+        if (SelectCallback != null)
+            SelectCallback(this);
+    }
 
-	private void UpdateSelectHighlightRing()
-	{
-		if (highlightPanel == null)
-			return;
+    public void OnMouseEnter()
+    {
+        Highlighted = true;
+    }
 
-		highlightPanel.Visible = Highlighted || Selected;
-	}
+    public void OnMouseExit()
+    {
+        Highlighted = false;
+    }
 
-	private void UpdateMarkRing()
-	{
-		if (markPanel == null)
-			return;
+    private void UpdateSelectHighlightRing()
+    {
+        if (highlightPanel == null)
+            return;
 
-		markPanel.Visible = Marked;
-	}
+        highlightPanel.Visible = Highlighted || Selected;
+    }
 
-	private void UpdateIcon()
-	{
-		if (PatchIcon == null || iconRect == null)
-			return;
+    private void UpdateMarkRing()
+    {
+        if (markPanel == null)
+            return;
 
-		iconRect.Texture = PatchIcon;
-	}
+        markPanel.Visible = Marked;
+    }
+
+    private void UpdateIcon()
+    {
+        if (PatchIcon == null || iconRect == null)
+            return;
+
+        iconRect.Texture = PatchIcon;
+    }
 }

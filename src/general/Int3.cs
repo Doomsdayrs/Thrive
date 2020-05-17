@@ -18,12 +18,12 @@ public struct Int3 : System.IEquatable<Int3>
         this.z = z;
     }
 
-    public static bool operator ==(Int3 left, Int3 right)
+    public static bool operator==(Int3 left, Int3 right)
     {
         return left.Equals(right);
     }
 
-    public static bool operator !=(Int3 left, Int3 right)
+    public static bool operator!=(Int3 left, Int3 right)
     {
         return !(left == right);
     }

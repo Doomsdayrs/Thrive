@@ -128,12 +128,12 @@ public class Biome : IRegistryType, ICloneable
         public float Density;
         public float Dissolved;
 
-        public static bool operator ==(EnvironmentalCompoundProperties left, EnvironmentalCompoundProperties right)
+        public static bool operator==(EnvironmentalCompoundProperties left, EnvironmentalCompoundProperties right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(EnvironmentalCompoundProperties left, EnvironmentalCompoundProperties right)
+        public static bool operator!=(EnvironmentalCompoundProperties left, EnvironmentalCompoundProperties right)
         {
             return !(left == right);
         }
@@ -192,12 +192,12 @@ public class Biome : IRegistryType, ICloneable
 
         public Dictionary<string, ChunkCompound> Compounds;
 
-        public static bool operator ==(ChunkConfiguration left, ChunkConfiguration right)
+        public static bool operator==(ChunkConfiguration left, ChunkConfiguration right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(ChunkConfiguration left, ChunkConfiguration right)
+        public static bool operator!=(ChunkConfiguration left, ChunkConfiguration right)
         {
             return !(left == right);
         }
@@ -237,12 +237,12 @@ public class Biome : IRegistryType, ICloneable
         {
             public float Amount;
 
-            public static bool operator ==(ChunkCompound left, ChunkCompound right)
+            public static bool operator==(ChunkCompound left, ChunkCompound right)
             {
                 return left.Equals(right);
             }
 
-            public static bool operator !=(ChunkCompound left, ChunkCompound right)
+            public static bool operator!=(ChunkCompound left, ChunkCompound right)
             {
                 return !(left == right);
             }

@@ -6,259 +6,259 @@ using Godot;
 /// </summary>
 public class MainMenu : Node
 {
-	/// <summary>
-	///   Index of the current menu.
-	/// </summary>
-	[Export]
-	public uint CurrentMenuIndex;
+    /// <summary>
+    ///   Index of the current menu.
+    /// </summary>
+    [Export]
+    public uint CurrentMenuIndex;
 
-	[Export]
-	public NodePath ThriveLogoPath;
+    [Export]
+    public NodePath ThriveLogoPath;
 
-	public Godot.Collections.Array MenuArray;
-	public TextureRect Background;
+    public Godot.Collections.Array MenuArray;
+    public TextureRect Background;
 
-	public bool IsReturningToMenu = false;
+    public bool IsReturningToMenu = false;
 
-	private TextureRect thriveLogo;
-	private OptionsMenu options;
+    private TextureRect thriveLogo;
+    private OptionsMenu options;
 
-	public override void _Ready()
-	{
-		RunMenuSetup();
+    public override void _Ready()
+    {
+        RunMenuSetup();
 
-		// Start intro video
-		if (Settings.Instance.PlayIntroVideo && !IsReturningToMenu)
-		{
-			TransitionManager.Instance.AddCutscene("res://assets/videos/intro.webm");
-			TransitionManager.Instance.StartTransitions(this, nameof(OnIntroEnded));
-		}
-		else
-		{
-			OnIntroEnded();
-		}
-	}
+        // Start intro video
+        if (Settings.Instance.PlayIntroVideo && !IsReturningToMenu)
+        {
+            TransitionManager.Instance.AddCutscene("res://assets/videos/intro.webm");
+            TransitionManager.Instance.StartTransitions(this, nameof(OnIntroEnded));
+        }
+        else
+        {
+            OnIntroEnded();
+        }
+    }
 
-	public void StartMusic()
-	{
-		Jukebox.Instance.PlayingCategory = "Menu";
-		Jukebox.Instance.Resume();
-	}
+    public void StartMusic()
+    {
+        Jukebox.Instance.PlayingCategory = "Menu";
+        Jukebox.Instance.Resume();
+    }
 
-	/// <summary>
-	///   Setup the main menu.
-	/// </summary>
-	private void RunMenuSetup()
-	{
-		Background = GetNode<TextureRect>("Background");
-		thriveLogo = GetNode<TextureRect>(ThriveLogoPath);
+    /// <summary>
+    ///   Setup the main menu.
+    /// </summary>
+    private void RunMenuSetup()
+    {
+        Background = GetNode<TextureRect>("Background");
+        thriveLogo = GetNode<TextureRect>(ThriveLogoPath);
 
-		if (MenuArray != null)
-			MenuArray.Clear();
+        if (MenuArray != null)
+            MenuArray.Clear();
 
-		// Get all of menu items
-		MenuArray = GetTree().GetNodesInGroup("MenuItem");
+        // Get all of menu items
+        MenuArray = GetTree().GetNodesInGroup("MenuItem");
 
-		if (MenuArray == null)
-		{
-			GD.PrintErr("Failed to find all the menu items!");
-			return;
-		}
+        if (MenuArray == null)
+        {
+            GD.PrintErr("Failed to find all the menu items!");
+            return;
+        }
 
-		RandomizeBackground();
+        RandomizeBackground();
 
-		options = GetNode<OptionsMenu>("OptionsMenu");
+        options = GetNode<OptionsMenu>("OptionsMenu");
 
-		// Load settings
-		options.SetSettingsFrom(Settings.Instance);
+        // Load settings
+        options.SetSettingsFrom(Settings.Instance);
 
-		// Set initial menu to the current menu index
-		SetCurrentMenu(CurrentMenuIndex, false);
-	}
+        // Set initial menu to the current menu index
+        SetCurrentMenu(CurrentMenuIndex, false);
+    }
 
-	/// <summary>
-	///   Randomizes background images.
-	/// </summary>
-	private void RandomizeBackground()
-	{
-		Random rand = new Random();
-		int num = rand.Next(0, 10);
+    /// <summary>
+    ///   Randomizes background images.
+    /// </summary>
+    private void RandomizeBackground()
+    {
+        Random rand = new Random();
+        int num = rand.Next(0, 10);
 
-		if (num <= 3)
-		{
-			SetBackground("res://assets/textures/gui/BG_Menu01.png");
-		}
-		else if (num <= 6)
-		{
-			SetBackground("res://assets/textures/gui/BG_Menu02.png");
-		}
-		else if (num <= 9)
-		{
-			SetBackground("res://assets/textures/gui/BG_Menu03.png");
-		}
-	}
+        if (num <= 3)
+        {
+            SetBackground("res://assets/textures/gui/BG_Menu01.png");
+        }
+        else if (num <= 6)
+        {
+            SetBackground("res://assets/textures/gui/BG_Menu02.png");
+        }
+        else if (num <= 9)
+        {
+            SetBackground("res://assets/textures/gui/BG_Menu03.png");
+        }
+    }
 
-	private void SetBackground(string filepath)
-	{
-		if (Background == null)
-		{
-			GD.PrintErr("Background object doesn't exist");
-			return;
-		}
+    private void SetBackground(string filepath)
+    {
+        if (Background == null)
+        {
+            GD.PrintErr("Background object doesn't exist");
+            return;
+        }
 
-		var backgroundImage = GD.Load<Texture>(filepath);
-		Background.Texture = backgroundImage;
-	}
+        var backgroundImage = GD.Load<Texture>(filepath);
+        Background.Texture = backgroundImage;
+    }
 
-	/// <summary>
-	///   Change the menu displayed on screen to one
-	///   with the menu of the given index.
-	/// </summary>
-	private void SetCurrentMenu(uint index, bool slide = true)
-	{
-		// Using tween for value interpolation
-		var tween = GetNode<Tween>("MenuTween");
+    /// <summary>
+    ///   Change the menu displayed on screen to one
+    ///   with the menu of the given index.
+    /// </summary>
+    private void SetCurrentMenu(uint index, bool slide = true)
+    {
+        // Using tween for value interpolation
+        var tween = GetNode<Tween>("MenuTween");
 
-		// Allow disabling all the menus for going to the options menu
-		if (index > MenuArray.Count - 1 && index != uint.MaxValue)
-		{
-			GD.PrintErr("Selected menu index is out of range!");
-			return;
-		}
-		else
-		{
-			CurrentMenuIndex = index;
-		}
+        // Allow disabling all the menus for going to the options menu
+        if (index > MenuArray.Count - 1 && index != uint.MaxValue)
+        {
+            GD.PrintErr("Selected menu index is out of range!");
+            return;
+        }
+        else
+        {
+            CurrentMenuIndex = index;
+        }
 
-		// Hide all menu and only show the one
-		// with the correct index
-		foreach (Control menu in MenuArray)
-		{
-			menu.Hide();
+        // Hide all menu and only show the one
+        // with the correct index
+        foreach (Control menu in MenuArray)
+        {
+            menu.Hide();
 
-			if (menu.GetIndex() == index)
-			{
-				menu.Show();
+            if (menu.GetIndex() == index)
+            {
+                menu.Show();
 
-				// Play the slide down animation
-				// TODO: Improve how this is done
-				if (slide)
-				{
-					tween.InterpolateProperty(menu, "custom_constants/separation", -35,
-						10, 0.3f, Tween.TransitionType.Sine);
-					tween.Start();
-				}
-			}
-		}
-	}
+                // Play the slide down animation
+                // TODO: Improve how this is done
+                if (slide)
+                {
+                    tween.InterpolateProperty(menu, "custom_constants/separation", -35,
+                        10, 0.3f, Tween.TransitionType.Sine);
+                    tween.Start();
+                }
+            }
+        }
+    }
 
-	private void OnIntroEnded()
-	{
-		TransitionManager.Instance.AddScreenFade(Fade.FadeType.FadeOut, 0.5f, false);
-		TransitionManager.Instance.StartTransitions(null, string.Empty);
+    private void OnIntroEnded()
+    {
+        TransitionManager.Instance.AddScreenFade(Fade.FadeType.FadeOut, 0.5f, false);
+        TransitionManager.Instance.StartTransitions(null, string.Empty);
 
-		// Start music after the video
-		StartMusic();
-	}
+        // Start music after the video
+        StartMusic();
+    }
 
-	private void OnMicrobeIntroEnded()
-	{
-		// TODO: Add loading screen while changing between scenes
+    private void OnMicrobeIntroEnded()
+    {
+        // TODO: Add loading screen while changing between scenes
 
-		var scene = GD.Load<PackedScene>("res://src/microbe_stage/MicrobeStage.tscn");
+        var scene = GD.Load<PackedScene>("res://src/microbe_stage/MicrobeStage.tscn");
 
-		// Instantiate a new microbe stage scene
-		var stage = (MicrobeStage)scene.Instance();
+        // Instantiate a new microbe stage scene
+        var stage = (MicrobeStage)scene.Instance();
 
-		var parent = GetParent();
-		parent.RemoveChild(this);
-		parent.AddChild(stage);
-	}
+        var parent = GetParent();
+        parent.RemoveChild(this);
+        parent.AddChild(stage);
+    }
 
-	private void OnFreebuildFadeInEnded()
-	{
-		// Instantiate a new editor scene
-		var scene = GD.Load<PackedScene>("res://src/microbe_stage/editor/MicrobeEditor.tscn");
+    private void OnFreebuildFadeInEnded()
+    {
+        // Instantiate a new editor scene
+        var scene = GD.Load<PackedScene>("res://src/microbe_stage/editor/MicrobeEditor.tscn");
 
-		var editor = (MicrobeEditor)scene.Instance();
+        var editor = (MicrobeEditor)scene.Instance();
 
-		// Start freebuild game
-		editor.CurrentGame = GameProperties.StartNewMicrobeGame(true);
+        // Start freebuild game
+        editor.CurrentGame = GameProperties.StartNewMicrobeGame(true);
 
-		// Switch to the editor scene
-		var parent = GetParent();
-		parent.RemoveChild(this);
-		parent.AddChild(editor);
-	}
+        // Switch to the editor scene
+        var parent = GetParent();
+        parent.RemoveChild(this);
+        parent.AddChild(editor);
+    }
 
-	private void NewGamePressed()
-	{
-		GUICommon.Instance.PlayButtonPressSound();
+    private void NewGamePressed()
+    {
+        GUICommon.Instance.PlayButtonPressSound();
 
-		// Stop music for the video (stop is used instead of pause to stop the menu music playing a bit after the video
-		// before the stage music starts)
-		Jukebox.Instance.Stop();
+        // Stop music for the video (stop is used instead of pause to stop the menu music playing a bit after the video
+        // before the stage music starts)
+        Jukebox.Instance.Stop();
 
-		if (Settings.Instance.PlayMicrobeIntroVideo)
-		{
-			TransitionManager.Instance.AddScreenFade(Fade.FadeType.FadeIn, 0.5f);
-			TransitionManager.Instance.AddCutscene("res://assets/videos/microbe_intro2.webm");
-		}
-		else
-		{
-			// People who disable the cutscene are impatient anyway so use a reduced fade time
-			TransitionManager.Instance.AddScreenFade(Fade.FadeType.FadeIn, 0.2f);
-		}
+        if (Settings.Instance.PlayMicrobeIntroVideo)
+        {
+            TransitionManager.Instance.AddScreenFade(Fade.FadeType.FadeIn, 0.5f);
+            TransitionManager.Instance.AddCutscene("res://assets/videos/microbe_intro2.webm");
+        }
+        else
+        {
+            // People who disable the cutscene are impatient anyway so use a reduced fade time
+            TransitionManager.Instance.AddScreenFade(Fade.FadeType.FadeIn, 0.2f);
+        }
 
-		TransitionManager.Instance.StartTransitions(this, nameof(OnMicrobeIntroEnded));
-	}
+        TransitionManager.Instance.StartTransitions(this, nameof(OnMicrobeIntroEnded));
+    }
 
-	private void ToolsPressed()
-	{
-		GUICommon.Instance.PlayButtonPressSound();
-		SetCurrentMenu(1);
-	}
+    private void ToolsPressed()
+    {
+        GUICommon.Instance.PlayButtonPressSound();
+        SetCurrentMenu(1);
+    }
 
-	private void FreebuildEditorPressed()
-	{
-		GUICommon.Instance.PlayButtonPressSound();
+    private void FreebuildEditorPressed()
+    {
+        GUICommon.Instance.PlayButtonPressSound();
 
-		TransitionManager.Instance.AddScreenFade(Fade.FadeType.FadeIn, 0.3f, false);
-		TransitionManager.Instance.StartTransitions(this, nameof(OnFreebuildFadeInEnded));
-	}
+        TransitionManager.Instance.AddScreenFade(Fade.FadeType.FadeIn, 0.3f, false);
+        TransitionManager.Instance.StartTransitions(this, nameof(OnFreebuildFadeInEnded));
+    }
 
-	private void BackFromToolsPressed()
-	{
-		GUICommon.Instance.PlayButtonPressSound();
-		SetCurrentMenu(0);
-	}
+    private void BackFromToolsPressed()
+    {
+        GUICommon.Instance.PlayButtonPressSound();
+        SetCurrentMenu(0);
+    }
 
-	private void QuitPressed()
-	{
-		GUICommon.Instance.PlayButtonPressSound();
-		GetTree().Quit();
-	}
+    private void QuitPressed()
+    {
+        GUICommon.Instance.PlayButtonPressSound();
+        GetTree().Quit();
+    }
 
-	private void OptionsPressed()
-	{
-		GUICommon.Instance.PlayButtonPressSound();
+    private void OptionsPressed()
+    {
+        GUICommon.Instance.PlayButtonPressSound();
 
-		// Hide all the other menus
-		SetCurrentMenu(uint.MaxValue);
+        // Hide all the other menus
+        SetCurrentMenu(uint.MaxValue);
 
-		// Show the options
-		options.Visible = true;
+        // Show the options
+        options.Visible = true;
 
-		thriveLogo.Hide();
-	}
+        thriveLogo.Hide();
+    }
 
-	private void OnReturnFromOptions()
-	{
-		options.Visible = false;
+    private void OnReturnFromOptions()
+    {
+        options.Visible = false;
 
-		// Hide all the other menus
-		SetCurrentMenu(0);
+        // Hide all the other menus
+        SetCurrentMenu(0);
 
-		thriveLogo.Show();
-	}
+        thriveLogo.Show();
+    }
 }

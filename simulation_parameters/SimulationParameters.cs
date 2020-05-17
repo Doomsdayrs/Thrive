@@ -43,7 +43,7 @@ public class SimulationParameters
         compounds = LoadRegistry<Compound>(
             "res://simulation_parameters/microbe_stage/compounds.json");
         organelles = LoadRegistry<OrganelleDefinition>(
-                    "res://simulation_parameters/microbe_stage/organelles.json");
+            "res://simulation_parameters/microbe_stage/organelles.json");
 
         NameGenerator = LoadDirectObject<NameGenerator>(
             "res://simulation_parameters/microbe_stage/species_names.json");
@@ -60,10 +60,7 @@ public class SimulationParameters
 
     public static SimulationParameters Instance
     {
-        get
-        {
-            return SingletonInstance;
-        }
+        get { return SingletonInstance; }
     }
 
     public NameGenerator NameGenerator { get; }

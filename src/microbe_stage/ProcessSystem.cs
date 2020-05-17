@@ -153,7 +153,8 @@ public class ProcessSystem
             var task = new Task(() =>
             {
                 for (int a = start;
-                    a < start + Constants.PROCESS_OBJECTS_PER_TASK && a < nodes.Count; ++a)
+                    a < start + Constants.PROCESS_OBJECTS_PER_TASK && a < nodes.Count;
+                    ++a)
                 {
                     ProcessNode(nodes[a] as IProcessable, delta);
                 }

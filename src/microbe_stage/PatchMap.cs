@@ -15,10 +15,7 @@ public class PatchMap
     /// </summary>
     public Patch CurrentPatch
     {
-        get
-        {
-            return currentPatch;
-        }
+        get { return currentPatch; }
         set
         {
             // New patch must be part of this map

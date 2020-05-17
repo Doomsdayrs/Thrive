@@ -53,10 +53,7 @@ public class PlacedOrganelle : Spatial, IPositionedOrganelle
     /// </summary>
     public Color Colour
     {
-        get
-        {
-            return colour;
-        }
+        get { return colour; }
         set
         {
             colour = value;
@@ -131,10 +128,7 @@ public class PlacedOrganelle : Spatial, IPositionedOrganelle
     /// </summary>
     public bool IsAgentVacuole
     {
-        get
-        {
-            return HasComponent<AgentVacuoleComponent>();
-        }
+        get { return HasComponent<AgentVacuoleComponent>(); }
     }
 
     /// <summary>

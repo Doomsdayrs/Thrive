@@ -30,20 +30,14 @@ public class OrganelleTemplate : IPositionedOrganelle, ICloneable
 #pragma warning disable CA1033
     OrganelleDefinition IPositionedOrganelle.Definition
     {
-        get
-        {
-            return Definition;
-        }
+        get { return Definition; }
     }
 #pragma warning restore CA1033
 
     [JsonIgnore]
     public IEnumerable<Hex> RotatedHexes
     {
-        get
-        {
-            return Definition.GetRotatedHexes(Orientation);
-        }
+        get { return Definition.GetRotatedHexes(Orientation); }
     }
 
     public object Clone()

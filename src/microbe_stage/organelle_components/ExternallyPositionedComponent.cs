@@ -60,10 +60,12 @@ public abstract class ExternallyPositionedComponent : IOrganelleComponent
     }
 
     protected virtual void CustomAttach()
-    { }
+    {
+    }
 
     protected virtual void CustomDetach()
-    { }
+    {
+    }
 
     protected virtual bool NeedsUpdateAnyway()
     {

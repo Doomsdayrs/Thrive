@@ -56,10 +56,7 @@ public class Jukebox : Node
     /// </summary>
     public string PlayingCategory
     {
-        get
-        {
-            return playingCategory;
-        }
+        get { return playingCategory; }
 
         set
         {
@@ -418,8 +415,7 @@ public class Jukebox : Node
             do
             {
                 nextIndex = random.Next(0, list.Tracks.Count);
-            }
-            while (nextIndex == list.LastPlayedIndex && list.Tracks.Count > 1);
+            } while (nextIndex == list.LastPlayedIndex && list.Tracks.Count > 1);
 
             PlayTrack(getPlayer(playerToUse), list.Tracks[nextIndex]);
             list.LastPlayedIndex = nextIndex;

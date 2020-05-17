@@ -6,132 +6,126 @@ using Godot;
 /// </summary>
 public class LoadingScreen : Control
 {
-	[Export]
-	public NodePath ArtDescriptionPath;
-	[Export]
-	public NodePath LoadingMessagePath;
-	[Export]
-	public NodePath LoadingDescriptionPath;
-	[Export]
-	public NodePath TipLabelPath;
+    [Export]
+    public NodePath ArtDescriptionPath;
 
-	/// <summary>
-	///   How fast the loading indicator spins
-	/// </summary>
-	[Export]
-	public float SpinnerSpeed = 180.0f;
+    [Export]
+    public NodePath LoadingMessagePath;
 
-	private Label artDescription;
-	private Label loadingMessageLabel;
-	private Label loadingDescriptionLabel;
-	private Label tipLabel;
-	private Control spinner;
+    [Export]
+    public NodePath LoadingDescriptionPath;
 
-	private string loadingMessage = "Loading";
-	private string loadingDescription = string.Empty;
-	private string tip = "TIP: press the undo button in the editor to correct a mistake";
+    [Export]
+    public NodePath TipLabelPath;
 
-	private float totalElapsed = 0;
+    /// <summary>
+    ///   How fast the loading indicator spins
+    /// </summary>
+    [Export]
+    public float SpinnerSpeed = 180.0f;
 
-	public string LoadingMessage
-	{
-		get
-		{
-			return loadingMessage;
-		}
-		set
-		{
-			if (loadingMessage == value)
-				return;
+    private Label artDescription;
+    private Label loadingMessageLabel;
+    private Label loadingDescriptionLabel;
+    private Label tipLabel;
+    private Control spinner;
 
-			loadingMessage = value;
+    private string loadingMessage = "Loading";
+    private string loadingDescription = string.Empty;
+    private string tip = "TIP: press the undo button in the editor to correct a mistake";
 
-			if (loadingMessageLabel != null)
-			{
-				UpdateMessage();
-			}
-		}
-	}
+    private float totalElapsed = 0;
 
-	public string LoadingDescription
-	{
-		get
-		{
-			return loadingDescription;
-		}
-		set
-		{
-			if (loadingDescription == value)
-				return;
+    public string LoadingMessage
+    {
+        get { return loadingMessage; }
+        set
+        {
+            if (loadingMessage == value)
+                return;
 
-			loadingDescription = value;
+            loadingMessage = value;
 
-			if (loadingDescriptionLabel != null)
-			{
-				UpdateDescription();
-			}
-		}
-	}
+            if (loadingMessageLabel != null)
+            {
+                UpdateMessage();
+            }
+        }
+    }
 
-	public string Tip
-	{
-		get
-		{
-			return tip;
-		}
-		set
-		{
-			if (tip == value)
-				return;
+    public string LoadingDescription
+    {
+        get { return loadingDescription; }
+        set
+        {
+            if (loadingDescription == value)
+                return;
 
-			tip = value;
+            loadingDescription = value;
 
-			if (tipLabel != null)
-			{
-				UpdateTip();
-			}
-		}
-	}
+            if (loadingDescriptionLabel != null)
+            {
+                UpdateDescription();
+            }
+        }
+    }
 
-	public override void _Ready()
-	{
-		artDescription = GetNode<Label>(ArtDescriptionPath);
-		loadingMessageLabel = GetNode<Label>(LoadingMessagePath);
-		loadingDescriptionLabel = GetNode<Label>(LoadingDescriptionPath);
-		tipLabel = GetNode<Label>(TipLabelPath);
+    public string Tip
+    {
+        get { return tip; }
+        set
+        {
+            if (tip == value)
+                return;
 
-		spinner = GetNode<Control>("Spinner");
+            tip = value;
 
-		// TODO: implement randomized art showing
+            if (tipLabel != null)
+            {
+                UpdateTip();
+            }
+        }
+    }
 
-		// TODO: implement randomized tip showing
+    public override void _Ready()
+    {
+        artDescription = GetNode<Label>(ArtDescriptionPath);
+        loadingMessageLabel = GetNode<Label>(LoadingMessagePath);
+        loadingDescriptionLabel = GetNode<Label>(LoadingDescriptionPath);
+        tipLabel = GetNode<Label>(TipLabelPath);
 
-		UpdateMessage();
-		UpdateDescription();
-		UpdateTip();
-		artDescription.Text = string.Empty;
-	}
+        spinner = GetNode<Control>("Spinner");
 
-	public override void _Process(float delta)
-	{
-		// Spin the spinner
-		totalElapsed += delta;
+        // TODO: implement randomized art showing
 
-		spinner.RectRotation = (int)(totalElapsed * SpinnerSpeed) % 360;
-	}
+        // TODO: implement randomized tip showing
 
-	private void UpdateMessage()
-	{
-		loadingMessageLabel.Text = LoadingMessage;
-	}
+        UpdateMessage();
+        UpdateDescription();
+        UpdateTip();
+        artDescription.Text = string.Empty;
+    }
 
-	private void UpdateDescription()
-	{
-		loadingDescriptionLabel.Text = LoadingDescription;
-	}
+    public override void _Process(float delta)
+    {
+        // Spin the spinner
+        totalElapsed += delta;
 
-	private void UpdateTip()
-	{
-		tipLabel.Text = Tip;
-	}
+        spinner.RectRotation = (int)(totalElapsed * SpinnerSpeed) % 360;
+    }
+
+    private void UpdateMessage()
+    {
+        loadingMessageLabel.Text = LoadingMessage;
+    }
+
+    private void UpdateDescription()
+    {
+        loadingDescriptionLabel.Text = LoadingDescription;
+    }
+
+    private void UpdateTip()
+    {
+        tipLabel.Text = Tip;
+    }
 }
